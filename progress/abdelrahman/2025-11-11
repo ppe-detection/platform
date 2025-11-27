@@ -1,0 +1,30 @@
+# Abdelrahman Elsayed – Progress Update (Nov 11, 2025)
+
+Over the past few weeks, I’ve been working mainly on the AI side of our PPE Detection System. I focused on setting up and training YOLOv5 to detect lab coats, gloves, and goggles using our collected dataset. I’ve also been coordinating with the Chemistry Department and Henrique from the TEAM Hub to organize access to PPE equipment and plan image collection sessions for new datasets. We are currently waiting for Henrique’s response to confirm PPE availability so we can start collecting images and prepare for retraining using the latest YOLO model (led by Spencer).
+
+---
+
+### What I Did
+- Set up a new YOLOv5 project in a clean Python environment.
+- Installed and configured PyTorch, Torchvision, and Ultralytics.
+- Cloned and verified the YOLOv5 repository with the sample `zidane.jpg`.
+- Gathered PPE images (lab coats, gloves, goggles) to build and test the dataset.
+- Linked the dataset to YOLOv5 and confirmed detection on sample images.
+- Trained the model using YOLOv5s weights and confirmed detection of PPE types.
+- Saved training results, graphs, and model weights in the `runs/train/exp/` folder.
+- Created a setup guide (`YOLOv5_Setup_Guide_Abdelrahman.docx`) to help teammates replicate the setup.
+- Coordinated PPE access and data collection planning with Henrique and the Chemistry Department.
+
+---
+
+### What I’m Working On Next
+- Waiting for PPE access confirmation from Henrique to begin dataset collection.
+- Preparing to retrain the model using the latest YOLO version (led by Spencer).
+- Expanding and refining the dataset to improve accuracy.
+- Testing the trained model on new lab images and videos.
+- Integrating the detection model into the backend for real-time functionality.
+
+---
+
+### Summary
+I’ve successfully set up and trained YOLOv5 to recognize lab coats, gloves, and goggles. The model performs well on test images, and once PPE access is confirmed, we’ll begin collecting new data and move to YOLO’s latest version for retraining.
