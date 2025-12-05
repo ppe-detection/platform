@@ -5,9 +5,11 @@ supabase>=2.0.0
 
 # Computer Vision
 opencv-python>=4.8.0
+opencv-python-headless>=4.8.0
 numpy>=1.24.0
+ultralytics>=8.0.0
 
-# HTTP client for AI detector
+# HTTP client (still useful for other things, though not for detector anymore)
 aiohttp>=3.9.0
 
 # API Server
@@ -20,5 +22,3 @@ asyncio>=3.4.3
 
 # Environment management (optional, for .env files)
 python-dotenv>=1.0.0
-
-

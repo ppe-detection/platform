@@ -1,12 +1,12 @@
 # Edge Controller Service
 
-Headless Python service for ingesting video streams from cameras, processing frames with a local AI detector, and pushing PPE violation alerts to Supabase.
+Headless Python service for ingesting video streams from cameras, processing frames with local YOLO models, and pushing PPE violation alerts to Supabase.
 
 ## Overview
 
 This service runs on a dedicated edge device in the laboratory. It:
 - Connects to local USB/IP cameras (RTSP or USB)
-- Sends frames to a local Dockerized Object Detector (running at `http://localhost:8000/predict`)
+- Runs a local Cascade Object Detector using YOLO (Person -> Crop -> Sub-models)
 - Processes detections to identify safety violations
 - Pushes alerts and session data to Supabase in real-time
 - Listens for "Start/Stop Session" commands from Supabase
@@ -15,7 +15,7 @@ This service runs on a dedicated edge device in the laboratory. It:
 
 - Python 3.11+
 - Access to cameras (USB or RTSP)
-- Local Docker container running the object detection model
+- YOLO model files (`.pt`) placed in the `models/` directory
 - Supabase project with configured storage bucket and database tables
 
 ## Installation
@@ -31,10 +31,9 @@ cp .env.example .env
 # Edit .env with your configuration
 ```
 
-3. Ensure the object detection model is running:
-```bash
-# The model should be accessible at http://localhost:8000/predict
-```
+3. Ensure YOLO models are present:
+Place your `.pt` files (person.pt, eyes.pt, gloves.pt, etc.) in the `models/` directory.
+
 
 ## Configuration
 
@@ -117,9 +116,9 @@ The service is designed to be headless and run as a systemd service or in a cont
 - Check camera is not being used by another process
 
 ### AI Detector Connection Issues
-- Verify detector is running: `curl http://localhost:8000/health`
-- Check `DETECTOR_URL` and `DETECTOR_ENDPOINT` in `.env`
-- Increase `DETECTOR_TIMEOUT` if detector is slow
+- Verify YOLO models are in the `models/` directory
+- Check logs for model loading errors
+- Increase `DETECTOR_TIMEOUT` if processing is slow (though this now applies to internal processing time limits if applicable)
 
 ### Supabase Connection Issues
 - Verify `SUPABASE_URL` and `SUPABASE_ANON_KEY` are correct

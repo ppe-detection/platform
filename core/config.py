@@ -32,8 +32,6 @@ class Config:
     supabase_service_role_key: Optional[str] = None
     
     # AI Detector Configuration
-    detector_url: str = "http://localhost:8000"
-    detector_endpoint: str = "/predict"
     detector_timeout: float = 5.0
     use_mock_detector: bool = False  # Flag to use mock detection
     
@@ -51,7 +49,6 @@ class Config:
     require_goggles: bool = True
     require_lab_coat: bool = True
     require_gloves: bool = False
-    require_helmet: bool = False  # For construction/industrial labs
     
     # Person-PPE Association
     iou_threshold: float = 0.3  # Intersection over Union for matching PPE to people
@@ -87,11 +84,6 @@ class Config:
             )
         
         # AI Detector
-        self.detector_url = os.getenv("DETECTOR_URL", self.detector_url)
-        self.detector_endpoint = os.getenv(
-            "DETECTOR_ENDPOINT",
-            self.detector_endpoint
-        )
         self.detector_timeout = float(
             os.getenv("DETECTOR_TIMEOUT", str(self.detector_timeout))
         )
@@ -143,9 +135,6 @@ class Config:
         ).lower() == "true"
         self.require_gloves = os.getenv(
             "REQUIRE_GLOVES", str(self.require_gloves)
-        ).lower() == "true"
-        self.require_helmet = os.getenv(
-            "REQUIRE_HELMET", str(self.require_helmet)
         ).lower() == "true"
         
         # IOU threshold

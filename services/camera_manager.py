@@ -198,6 +198,13 @@ class CameraStream:
             ret, frame = self.cap.read()
             
             if not ret:
+                # Handle End of Video File (Rewind for testing)
+                if source_type == "file":
+                    logger.info(f"Camera {self.config.id}: Video ended, rewinding to start...")
+                    self.cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                    continue
+
+                # Actual error for live streams
                 logger.warning(
                     f"Camera {self.config.id}: Failed to read frame. "
                     "Attempting reconnection..."

@@ -153,11 +153,11 @@ async def health_check():
 def main():
     """Main entry point."""
     # Use uvicorn to run the application
-    # Running on port 8001 to avoid conflict with the AI Detector (typically on 8000)
+    # Running on port 8000 as this is now the main service including detection
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
-        port=8001,
+        port=8000,
         reload=False
     )
 

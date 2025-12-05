@@ -1,0 +1,30 @@
+# Supabase Configuration
+SUPABASE_URL=your_project_url
+SUPABASE_KEY=your_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+
+# Camera Configuration
+CAMERA_SOURCES=cam1:videos/test_footage.mp4
+
+# AI Detection Settings
+DETECTOR_TIMEOUT=5.0
+USE_MOCK_DETECTOR=false
+
+# Violation Settings
+VIOLATION_DEBOUNCE_SECONDS=2.0
+VIOLATION_COOLDOWN_SECONDS=5.0
+IOU_THRESHOLD=0.3
+
+# PPE Requirements (Default)
+REQUIRE_GOGGLES=true
+REQUIRE_LAB_COAT=true
+REQUIRE_GLOVES=false
+
+# Frame Processing
+FRAME_WIDTH=640
+FRAME_HEIGHT=480
+FPS=10
+
+# Logging
+LOG_LEVEL=INFO
+

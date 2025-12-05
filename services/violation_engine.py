@@ -64,8 +64,22 @@ class ViolationEngine:
             "goggles": config.require_goggles,
             "lab_coat": config.require_lab_coat,
             "gloves": config.require_gloves,
-            "helmet": config.require_helmet,
         }
+
+        # PPE Class Aliases mapping
+        self.ppe_aliases = {
+            "safety glove": "gloves",
+            "glove": "gloves",
+            "coat": "lab_coat",
+            "safety glasses": "goggles",
+            "glasses": "goggles",
+            "eye protection": "goggles",
+        }
+
+    def _normalize_class(self, class_name: str) -> str:
+        """Normalize class name to standard PPE types."""
+        name = class_name.lower()
+        return self.ppe_aliases.get(name, name)
     
     def set_active_session(self, session_id: str, config: Dict = None):
         """Set the active lab session and update configuration."""
@@ -92,8 +106,8 @@ class ViolationEngine:
             self.required_ppe["gloves"] = config.get("gloves_enabled", False)
             
         # Handle potential mapping differences or additional keys
-        if "helmet_enabled" in config:
-             self.required_ppe["helmet"] = config.get("helmet_enabled", False)
+        # if "helmet_enabled" in config:
+        #     self.required_ppe["helmet"] = config.get("helmet_enabled", False)
 
         logger.info(f"New PPE requirements: {self.required_ppe}")
     
@@ -180,10 +194,17 @@ class ViolationEngine:
             d for d in detections
             if d.get("class", "").lower() == "person"
         ]
-        ppe_detections = [
-            d for d in detections
-            if d.get("class", "").lower() in ["goggles", "lab_coat", "gloves", "helmet"]
-        ]
+        
+        ppe_detections = []
+        for d in detections:
+            raw_class = d.get("class", "")
+            norm_class = self._normalize_class(raw_class)
+            
+            if norm_class in ["goggles", "lab_coat", "gloves"]:
+                # Create a copy with normalized class name for tracking
+                d_norm = d.copy()
+                d_norm["class"] = norm_class
+                ppe_detections.append(d_norm)
         
         # Update person tracking
         current_people = {}
